@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  openai:
+    build: CTFd/plugins/rate_file_by_openai
+    restart: always
+    volumes:
+      - ./CTFd/plugins/rate_file_by_openai/openai_code:/opt
+    networks:
+        internal:
+        default:

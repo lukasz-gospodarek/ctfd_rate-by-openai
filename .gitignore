@@ -1,0 +1,3 @@
+*.conf
+*/openai_config.py
+*/criteria.md

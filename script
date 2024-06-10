@@ -1,0 +1,13 @@
+#!/bin/bash
+sudo rm -rf CTFd
+git clone https://github.com/CTFd/CTFd.git
+
+rm -rf CTFd/CTFd/plugins/rate_file_by_openai
+cp -r rate_file_by_openai CTFd/CTFd/plugins/
+cp -r config/openai_config.py CTFd/CTFd/plugins/rate_file_by_openai/openai_code/app
+cp -r config/criteria.md CTFd/CTFd/plugins/rate_file_by_openai/openai_code/app
+
+cp -f src_files/docker-compose.override.yml CTFd/
+
+# cd CTFd
+# docker-compose up

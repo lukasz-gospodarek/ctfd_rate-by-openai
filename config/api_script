@@ -1,0 +1,20 @@
+# set the ctfd_api variables
+source ctfd_api.conf
+
+file_path="../src_files/submit_file.js"
+
+curl -X POST -L $api_url/api/v1/files --header "Authorization: Token $ctfd_api_token" --header "Content-Type: multipart/form-data" -F "type=page" -F "file=@$file_path"
+output=`curl -X GET -L $api_url/api/v1/files --header "Authorization: Token $ctfd_api_token" --header "Content-Type: application/json"`
+
+IFS='"'
+filename=`echo $file_path | rev | cut -d'/' -f 1 | rev`
+read -ra array <<< "$output"
+for element in "${array[@]}"
+do
+    if [[ "$element" == *"$filename"* ]]; then
+        location=$element
+    fi
+done
+echo $location
+
+curl -X POST $api_url/api/v1/pages --header "Authorization: Token $ctfd_api_token" --header "Content-Type: application/json" --data '{"hidden": false, "files": [], "link_target": null, "title": "notes", "format": "html", "content": "<h1>REPORT FILE UPLOAD</h1>\r\n<script src=\"/files/'$location'\"></script>\r\n<div class=\"col-md-9 form-group\">\r\n        <input id=\"challenge-id\" class=\"challenge-id\" type=\"hidden\" value=\"{{ challenge.id }}\">\r\n        <input id=\"challenge-input\" class=\"challenge-input\" type=\"file\" name=\"filename\"/>\r\n</div>\r\n<div class=\"col-md-3 form-group key-submit\">\r\n    <button id=\"chal-submit\" class=\"challenge-submit btn btn-md btn-outline-secondary float-right\" type=\"submit\" onclick=\"submitFile()\">\r\n        Submit\r\n    </button>\r\n</div>\r\n<div id=\"myDiv\"></div>", "auth_required": true, "draft": false, "route": "notes"}'

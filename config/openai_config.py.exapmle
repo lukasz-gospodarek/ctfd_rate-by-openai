@@ -1,0 +1,4 @@
+OPENAI_TOKEN = "sk-XXXXXXXXXXXXXXXXXXXx"
+OPENAI_MODEL = "gpt-4o"
+OPENAI_MESSAGES_SYSTEM_CONTENT = "Rate notes on this criteria. CRITERIA:"
+OPENAI_MESSAGES_USER_CONTENT = "There is a file content:"
