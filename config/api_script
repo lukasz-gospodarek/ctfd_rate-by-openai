@@ -1,6 +1,4 @@
 # set the ctfd_api variables
-source ctfd_api.conf
-
 if [ -z "$ctfd_api_token" ]
 then
     source ctfd_api.conf
