@@ -1,6 +1,16 @@
 # set the ctfd_api variables
 source ctfd_api.conf
 
+if [ -z "$ctfd_api_token" ]
+then
+    source ctfd_api.conf
+fi
+
+if [ -z "$api_url" ]
+then
+    source ctfd_api.conf
+fi
+
 file_path="../src_files/submit_file.js"
 
 curl -X POST -L $api_url/api/v1/files --header "Authorization: Token $ctfd_api_token" --header "Content-Type: multipart/form-data" -F "type=page" -F "file=@$file_path"
